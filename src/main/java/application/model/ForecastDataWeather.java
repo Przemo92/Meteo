@@ -1,5 +1,6 @@
 package application.model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -7,39 +8,38 @@ import java.util.Date;
 
 public class ForecastDataWeather {
 
-    private String temperatureString;
-    private double temperatureDouble;
-    private String readableDate;
-    private String time;
-    private String icon;
-    private long dateInSeconds;
-    private String msg;
-    private JsonReader jsonReader;
+    public String fetchIcon(int dayIndex, JsonReader jsonReader){
 
-    public ForecastDataWeather(JsonReader jsonReader) {
-        this.jsonReader = jsonReader;
+        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex,jsonReader);
+
+        return item.getJSONArray("weather").getJSONObject(0).get("icon").toString();
     }
 
-    public void fetchData(int dayIndex, String nameTown){
+    public String fetchDate(int dayIndex, JsonReader jsonReader){
 
-        JSONObject item = jsonReader.transformJsonObjectToArray(nameTown).getJSONObject(dayIndex - 1);
-        icon = item.getJSONArray("weather").getJSONObject(0).get("icon").toString();
+        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex,jsonReader);
 
-        fetchTimeAndDate(item);
-        fetchTemperature(item);
-
-    }
-
-    public void fetchTimeAndDate(JSONObject item){
-
-        dateInSeconds = item.optLong("dt");
+        long dateInSeconds = item.optLong("dt");
         SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
-        readableDate = format.format(new Date(dateInSeconds * 1000)); // convert that in milliseconds
-
-        SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
-        time = format2.format(new Date(dateInSeconds *1000));
+        Date date = new Date(dateInSeconds * 1000);
+        return format.format(date);
     }
-    public void fetchTemperature(JSONObject item){
+    public String fetchTime(int dayIndex, JsonReader jsonReader){
+
+        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex,jsonReader);
+
+        long dateInSeconds = item.optLong("dt");
+        SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
+        Date date = new Date(dateInSeconds * 1000);
+        return format2.format(date);
+    }
+
+    public String fetchTemperature(int dayIndex, JsonReader jsonReader){
+
+        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex,jsonReader);
+
+        double temperatureDouble;
+        String temperatureString;
 
         JSONObject main = item.getJSONObject("main");
         temperatureString = main.get("temp").toString();
@@ -48,34 +48,21 @@ public class ForecastDataWeather {
 
             temperatureString = String.format("%d",(long)temperatureDouble);
         }
-        catch (NumberFormatException e)
-        {
-            temperatureDouble = 0;
+        catch (NumberFormatException e) {
+            temperatureString = "0";
         }
-    }
-
-    public void fetchMessage(String nameTown){
-
-        msg = jsonReader.fetchWeatherMessage(nameTown);
-    }
-    public String getTemperature() {
         return temperatureString;
     }
 
-    public String getReadableDate() {
-        return readableDate;
-    }
+    private JSONObject tranformJsonArrayIntoMiniJsonObject(int dayIndex, JsonReader jsonReader){
 
-    public String getIcon() {
-        return icon;
+        JSONArray jsonArray = jsonReader.getJsonWeatherData();
+        return jsonArray.getJSONObject(dayIndex - 1);
     }
+    
+    public String fetchMessage(String nameTown){
 
-    public String getTime() {
-        return time;
+        JsonReader jsonReader = new JsonReader();
+        return jsonReader.fetchWeatherMessage(nameTown);
     }
-
-    public String getMsg() {
-        return msg;
-    }
-
 }

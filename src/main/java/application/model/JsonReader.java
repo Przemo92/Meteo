@@ -12,16 +12,57 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static application.controller.Messages.CONNECTION_PROBLEM_TEXT;
+import static application.controller.Messages.setExceptionLabelText;
+import static application.model.OpenWeatherMap.getFullApi;
+
 public class JsonReader {
 
-    private JSONObject json;
-    private JSONArray jsonWeatherData;
-    private String message;
-    OpenWeatherMap openWeatherMap;
+    private JSONArray jsonWeatherData = null;
 
+    public JsonReader() {
 
-    public JsonReader(OpenWeatherMap openWeatherMap) {
-        this.openWeatherMap = openWeatherMap;
+    }
+
+    public String fetchWeatherMessage(String nameTown){
+
+        String message;
+
+        try {
+            JSONObject json2 = readJsonFromUrl(getFullApi(nameTown));
+            message = "city exist";
+        }catch(IOException e){
+            message = "city not found";
+        }
+        return message;
+    }
+
+    public void  transformJsonObjectToArray(String nameTown){
+
+        try {
+            JSONObject json = readJsonFromUrl(getFullApi(nameTown));
+            jsonWeatherData = json.getJSONArray("list");
+        }catch (JSONException e){
+            System.out.println(e);
+            setExceptionLabelText(CONNECTION_PROBLEM_TEXT);
+        }catch (IOException ex){
+            System.out.println(ex);
+            setExceptionLabelText(CONNECTION_PROBLEM_TEXT);
+        }
+    }
+
+    private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+
+        InputStream is = new URL(url).openStream();
+
+        try {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            String jsonText = readAll(rd);
+            JSONObject json = new JSONObject(jsonText);
+            return json;
+        } finally {
+            is.close();
+        }
     }
 
     private static String readAll(Reader rd) throws IOException {
@@ -34,51 +75,7 @@ public class JsonReader {
         return sb.toString();
     }
 
-    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-
-            InputStream is = new URL(url).openStream();
-
-            try {
-                BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-                String jsonText = readAll(rd);
-                JSONObject json = new JSONObject(jsonText);
-                return json;
-            } finally {
-                is.close();
-            }
+    public JSONArray getJsonWeatherData() {
+        return jsonWeatherData;
     }
-    public JSONObject fetchJsonWeatherDataFromApi(String nameTown) {
-
-            try {
-                json = readJsonFromUrl(openWeatherMap.getFullApi(nameTown));
-
-            } catch (IOException e) {
-                System.out.println(e);
-
-            }
-            return json;
-    }
-    public JSONArray transformJsonObjectToArray(String nameTown){
-
-            json = fetchJsonWeatherDataFromApi(nameTown);
-            try {
-                jsonWeatherData = json.getJSONArray("list");
-            } catch (JSONException e) {
-                System.out.println(e);
-            }
-            return jsonWeatherData;
-    }
-    public String fetchWeatherMessage(String nameTown){
-
-        try {
-            JSONObject json2 = readJsonFromUrl(openWeatherMap.getFullApi(nameTown));
-            System.out.println(json2.toString());
-            message = "city exist";
-        }catch(IOException e){
-            System.out.println(e);
-            message = "city not found";
-        }
-        return message;
-    }
-
 }

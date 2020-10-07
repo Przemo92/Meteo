@@ -2,19 +2,13 @@ package application.model;
 
 public class OpenWeatherMap {
 
+    private static final String APIBASE = "http://api.openweathermap.org/data/2.5/forecast?q=";
+    private static final String UNITS = "metric";
+    private static final String LANG = "pl";
+    private static final String APIKEY = "347d51e680aef0b1dc1e56c9851eaaf9";
 
-    private final String APIBASE = "http://api.openweathermap.org/data/2.5/forecast?q=";
+    public static String getFullApi(String nameTown) {
 
-    private final String UNITS = "metric";
-    private final String LANG = "pl";
-    private final String APIKEY = "347d51e680aef0b1dc1e56c9851eaaf9";
-    private String fullApi1;
-
-
-    public String getFullApi(String nameTown) {
-
-        fullApi1 = APIBASE + nameTown + "&units=" + UNITS + "&appid=" + APIKEY + "&lang=" + LANG;
-        return fullApi1;
+        return APIBASE + nameTown + "&units=" + UNITS + "&appid=" + APIKEY + "&lang=" + LANG;
     }
-
 }

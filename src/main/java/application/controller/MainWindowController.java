@@ -6,21 +6,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import application.model.ForecastDataWeather;
-import application.model.GeneratorWeatherDays;
 import application.model.JsonReader;
-import application.model.OpenWeatherMap;
 import application.view.ViewFactory;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static application.controller.Messages.*;
 
 
 public class MainWindowController extends BaseController implements Initializable {
 
     private String nameTown1 = "LONDYN";
     private String nameTown2 = "POZNAŃ";
-    private String msg;
 
     @FXML
     private Label temperatureLabel1;
@@ -306,6 +304,9 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @FXML
     private Label errorLabel2;
+
+    @FXML
+    private Label exceptionLabel;
 
     @FXML
     private Label nameTownLabel1;
@@ -601,6 +602,11 @@ public class MainWindowController extends BaseController implements Initializabl
     @FXML
     private TextField textField2;
 
+    private ForecastDataWeather forecastDataWeather = new ForecastDataWeather();
+
+    public MainWindowController(ViewFactory viewFactory, String fxmlName){
+        super(viewFactory, fxmlName);
+    }
     @FXML
     void foundAction2(){
 
@@ -608,7 +614,9 @@ public class MainWindowController extends BaseController implements Initializabl
 
         if(fieldsAreValid2()){
 
+            setExceptionLabelText("");
             inputDataIntoObjects2();
+            exceptionLabel.setText(exceptionLabelText);
         }
     }
     @FXML
@@ -617,46 +625,135 @@ public class MainWindowController extends BaseController implements Initializabl
         nameTown1 = textField1.getText().toUpperCase();
         if(fieldsAreValid1()){
 
-                inputDataIntoObjects1();
+            setExceptionLabelText("");
+            inputDataIntoObjects1();
+            exceptionLabel.setText(exceptionLabelText);
         }
-    }
-   private GeneratorWeatherDays generatorWeatherDays =
-            new GeneratorWeatherDays(
-                    new ForecastDataWeather(
-                            new JsonReader(
-                                    new OpenWeatherMap())));
-    public MainWindowController(ViewFactory viewFactory, String fxmlName) throws IOException {
-        super(viewFactory, fxmlName);
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle){
 
         inputDataIntoObjects1();
         inputDataIntoObjects2();
-        try {
-            setLabelsWithDateAndTime();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        exceptionLabel.setText(exceptionLabelText);
+    }
+    public void inputDataIntoObjects1(){
+
+        JsonReader jsonReader = new JsonReader();
+        jsonReader.transformJsonObjectToArray(nameTown1);
+        nameTownLabel1.setText(nameTown1);
+        errorLabel1.setText("");
+
+        setLabelsWithDateAndTime(jsonReader);
+
+        setIconAndTemperatureIntoLabels(temperatureLabel1, iconLabel1, 1, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel2, iconLabel2, 2, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel3, iconLabel3, 3, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel4, iconLabel4, 4, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel5, iconLabel5, 5, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel6, iconLabel6, 6, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel7, iconLabel7, 7, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel8, iconLabel8, 8, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel9, iconLabel9, 9, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel10, iconLabel10, 10, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel11, iconLabel11, 11, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel12, iconLabel12, 12, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel13, iconLabel13, 13, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel14, iconLabel14, 14, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel15, iconLabel15, 15, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel16, iconLabel16, 16, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel17, iconLabel17, 17, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel18, iconLabel18, 18, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel19, iconLabel19, 19, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel20, iconLabel20, 20, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel21, iconLabel21, 21, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel22, iconLabel22, 22, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel23, iconLabel23, 23, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel24, iconLabel24, 24, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel25, iconLabel25, 25, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel26, iconLabel26, 26, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel27, iconLabel27, 27, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel28, iconLabel28, 28, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel29, iconLabel29, 29, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel30, iconLabel30, 30, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel31, iconLabel31, 31, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel32, iconLabel32, 32, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel33, iconLabel33, 33, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel34, iconLabel34, 34, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel35, iconLabel35, 35, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel36, iconLabel36, 36, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel37, iconLabel37, 37, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel38, iconLabel38, 38, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel39, iconLabel39, 39, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel40, iconLabel40, 40, jsonReader);
+    }
+    public void inputDataIntoObjects2() {
+
+        JsonReader jsonReader = new JsonReader();
+        jsonReader.transformJsonObjectToArray(nameTown2);
+        nameTownLabel2.setText(nameTown2);
+        errorLabel2.setText("");
+
+        setIconAndTemperatureIntoLabels(temperatureLabel41, iconLabel41, 1, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel42, iconLabel42, 2, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel43, iconLabel43, 3, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel44, iconLabel44, 4, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel45, iconLabel45, 5, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel46, iconLabel46, 6, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel47, iconLabel47, 7, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel48, iconLabel48, 8, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel49, iconLabel49, 9, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel50, iconLabel50, 10, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel51, iconLabel51, 11, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel52, iconLabel52, 12, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel53, iconLabel53, 13, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel54, iconLabel54, 14, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel55, iconLabel55, 15, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel56, iconLabel56, 16, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel57, iconLabel57, 17, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel58, iconLabel58, 18, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel59, iconLabel59, 19, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel60, iconLabel60, 20, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel61, iconLabel61, 21, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel62, iconLabel62, 22, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel63, iconLabel63, 23, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel64, iconLabel64, 24, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel65, iconLabel65, 25, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel66, iconLabel66, 26, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel67, iconLabel67, 27, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel68, iconLabel68, 28, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel69, iconLabel69, 29, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel70, iconLabel70, 30, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel71, iconLabel71, 31, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel72, iconLabel72, 32, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel73, iconLabel73, 33, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel74, iconLabel74, 34, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel75, iconLabel75, 35, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel76, iconLabel76, 36, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel77, iconLabel77, 37, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel78, iconLabel78, 38, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel79, iconLabel79, 39, jsonReader);
+        setIconAndTemperatureIntoLabels(temperatureLabel80, iconLabel80, 40, jsonReader);
     }
 
-    public void setLabelsWithDateAndTime() throws IOException {
+    private void setLabelsWithDateAndTime(JsonReader jsonReader){
 
-        firstDay.setText(generatorWeatherDays.generateData(1, nameTown1));
-        secondDay.setText(generatorWeatherDays.generateData(9, nameTown1));
-        thirdDay.setText(generatorWeatherDays.generateData(17, nameTown1));
-        fourthDay.setText(generatorWeatherDays.generateData(25, nameTown1));
-        fifthDay.setText(generatorWeatherDays.generateData(34, nameTown1));
+        firstDay.setText(forecastDataWeather.fetchDate(1, jsonReader));
+        secondDay.setText(forecastDataWeather.fetchDate(9, jsonReader));
+        thirdDay.setText(forecastDataWeather.fetchDate(17, jsonReader));
+        fourthDay.setText(forecastDataWeather.fetchDate(25, jsonReader));
+        fifthDay.setText(forecastDataWeather.fetchDate(34, jsonReader));
 
-        time1.setText(generatorWeatherDays.generateTime(1, nameTown1));
-        time2.setText(generatorWeatherDays.generateTime(2, nameTown1));
-        time3.setText(generatorWeatherDays.generateTime(3, nameTown1));
-        time4.setText(generatorWeatherDays.generateTime(4, nameTown1));
-        time5.setText(generatorWeatherDays.generateTime(5, nameTown1));
-        time6.setText(generatorWeatherDays.generateTime(6, nameTown1));
-        time7.setText(generatorWeatherDays.generateTime(7, nameTown1));
-        time8.setText(generatorWeatherDays.generateTime(8, nameTown1));
+        time1.setText(forecastDataWeather.fetchTime(1, jsonReader));
+        time2.setText(forecastDataWeather.fetchTime(2, jsonReader));
+        time3.setText(forecastDataWeather.fetchTime(3, jsonReader));
+        time4.setText(forecastDataWeather.fetchTime(4, jsonReader));
+        time5.setText(forecastDataWeather.fetchTime(5, jsonReader));
+        time6.setText(forecastDataWeather.fetchTime(6, jsonReader));
+        time7.setText(forecastDataWeather.fetchTime(7, jsonReader));
+        time8.setText(forecastDataWeather.fetchTime(8, jsonReader));
 
         firstDay2.setText(firstDay.getText());
         secondDay2.setText(secondDay.getText());
@@ -673,282 +770,31 @@ public class MainWindowController extends BaseController implements Initializabl
         time15.setText(time7.getText());
         time16.setText(time8.getText());
     }
-    public void inputDataIntoObjects1() {
 
-        nameTownLabel1.setText(nameTown1);
-        errorLabel1.setText("");
-
-        temperatureLabel1.setText(generatorWeatherDays.generateTemperature(1, nameTown1) + "°C");
-        iconLabel1.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(1, nameTown1) + ".png"));
-
-        temperatureLabel2.setText(generatorWeatherDays.generateTemperature(2, nameTown1) + "°C");
-        iconLabel2.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(2, nameTown1) + ".png"));
-
-        temperatureLabel3.setText(generatorWeatherDays.generateTemperature(3, nameTown1) + "°C");
-        iconLabel3.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(3, nameTown1) + ".png"));
-
-        temperatureLabel4.setText(generatorWeatherDays.generateTemperature(4, nameTown1) + "°C");
-        iconLabel4.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(4, nameTown1) + ".png"));
-
-        temperatureLabel5.setText(generatorWeatherDays.generateTemperature(5, nameTown1) + "°C");
-        iconLabel5.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(5, nameTown1) + ".png"));
-
-        temperatureLabel6.setText(generatorWeatherDays.generateTemperature(6, nameTown1) + "°C");
-        iconLabel6.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(6, nameTown1) + ".png"));
-
-        temperatureLabel7.setText(generatorWeatherDays.generateTemperature(7, nameTown1) + "°C");
-        iconLabel7.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(7, nameTown1) + ".png"));
-
-        temperatureLabel8.setText(generatorWeatherDays.generateTemperature(8, nameTown1) + "°C");
-        iconLabel8.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(8, nameTown1) + ".png"));
-
-        temperatureLabel9.setText(generatorWeatherDays.generateTemperature(9, nameTown1) + "°C");
-        iconLabel9.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(9, nameTown1) + ".png"));
-
-        temperatureLabel10.setText(generatorWeatherDays.generateTemperature(10, nameTown1) + "°C");
-        iconLabel10.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(10, nameTown1) + ".png"));
-
-        temperatureLabel11.setText(generatorWeatherDays.generateTemperature(11, nameTown1) + "°C");
-        iconLabel11.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(11, nameTown1) + ".png"));
-
-        temperatureLabel12.setText(generatorWeatherDays.generateTemperature(12, nameTown1) + "°C");
-        iconLabel12.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(12, nameTown1) + ".png"));
-
-        temperatureLabel13.setText(generatorWeatherDays.generateTemperature(13, nameTown1) + "°C");
-        iconLabel13.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(13, nameTown1) + ".png"));
-
-        temperatureLabel14.setText(generatorWeatherDays.generateTemperature(14, nameTown1) + "°C");
-        iconLabel14.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(14, nameTown1) + ".png"));
-
-        temperatureLabel15.setText(generatorWeatherDays.generateTemperature(15, nameTown1) + "°C");
-        iconLabel15.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(15, nameTown1) + ".png"));
-
-        temperatureLabel16.setText(generatorWeatherDays.generateTemperature(16, nameTown1) + "°C");
-        iconLabel16.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(16, nameTown1) + ".png"));
-
-        temperatureLabel17.setText(generatorWeatherDays.generateTemperature(17, nameTown1) + "°C");
-        iconLabel17.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(17, nameTown1) + ".png"));
-
-        temperatureLabel18.setText(generatorWeatherDays.generateTemperature(18, nameTown1) + "°C");
-        iconLabel18.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(18, nameTown1) + ".png"));
-
-        temperatureLabel19.setText(generatorWeatherDays.generateTemperature(19, nameTown1) + "°C");
-        iconLabel19.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(19, nameTown1) + ".png"));
-
-        temperatureLabel20.setText(generatorWeatherDays.generateTemperature(20, nameTown1) + "°C");
-        iconLabel20.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(20, nameTown1) + ".png"));
-
-        temperatureLabel21.setText(generatorWeatherDays.generateTemperature(21, nameTown1) + "°C");
-        iconLabel21.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(21, nameTown1) + ".png"));
-
-        temperatureLabel22.setText(generatorWeatherDays.generateTemperature(22, nameTown1) + "°C");
-        iconLabel22.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(22, nameTown1) + ".png"));
-
-        temperatureLabel23.setText(generatorWeatherDays.generateTemperature(23, nameTown1) + "°C");
-        iconLabel23.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(23, nameTown1) + ".png"));
-
-        temperatureLabel24.setText(generatorWeatherDays.generateTemperature(24, nameTown1) + "°C");
-        iconLabel24.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(24, nameTown1) + ".png"));
-
-        temperatureLabel25.setText(generatorWeatherDays.generateTemperature(25, nameTown1) + "°C");
-        iconLabel25.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(25, nameTown1) + ".png"));
-
-        temperatureLabel26.setText(generatorWeatherDays.generateTemperature(26, nameTown1) + "°C");
-        iconLabel26.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(26, nameTown1) + ".png"));
-
-        temperatureLabel27.setText(generatorWeatherDays.generateTemperature(27, nameTown1) + "°C");
-        iconLabel27.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(27, nameTown1) + ".png"));
-
-        temperatureLabel28.setText(generatorWeatherDays.generateTemperature(28, nameTown1) + "°C");
-        iconLabel28.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(28, nameTown1) + ".png"));
-
-        temperatureLabel29.setText(generatorWeatherDays.generateTemperature(29, nameTown1) + "°C");
-        iconLabel29.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(29, nameTown1) + ".png"));
-
-        temperatureLabel30.setText(generatorWeatherDays.generateTemperature(30, nameTown1) + "°C");
-        iconLabel30.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(30, nameTown1) + ".png"));
-
-        temperatureLabel31.setText(generatorWeatherDays.generateTemperature(31, nameTown1) + "°C");
-        iconLabel31.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(31, nameTown1) + ".png"));
-
-        temperatureLabel32.setText(generatorWeatherDays.generateTemperature(32, nameTown1) + "°C");
-        iconLabel32.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(32, nameTown1) + ".png"));
-
-        temperatureLabel33.setText(generatorWeatherDays.generateTemperature(33, nameTown1) + "°C");
-        iconLabel33.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(33, nameTown1) + ".png"));
-
-        temperatureLabel34.setText(generatorWeatherDays.generateTemperature(34, nameTown1) + "°C");
-        iconLabel34.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(34, nameTown1) + ".png"));
-
-        temperatureLabel35.setText(generatorWeatherDays.generateTemperature(35, nameTown1) + "°C");
-        iconLabel35.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(35, nameTown1) + ".png"));
-
-        temperatureLabel36.setText(generatorWeatherDays.generateTemperature(36, nameTown1) + "°C");
-        iconLabel36.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(36, nameTown1) + ".png"));
-
-        temperatureLabel37.setText(generatorWeatherDays.generateTemperature(37, nameTown1) + "°C");
-        iconLabel37.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(37, nameTown1) + ".png"));
-
-        temperatureLabel38.setText(generatorWeatherDays.generateTemperature(38, nameTown1) + "°C");
-        iconLabel38.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(38, nameTown1) + ".png"));
-
-        temperatureLabel39.setText(generatorWeatherDays.generateTemperature(39, nameTown1) + "°C");
-        iconLabel39.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(39, nameTown1) + ".png"));
-
-        temperatureLabel40.setText(generatorWeatherDays.generateTemperature(40, nameTown1) + "°C");
-        iconLabel40.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(40, nameTown1) + ".png"));
-
+    private void setIconAndTemperatureIntoLabels(Label temperatureLabel, Label iconLabel,
+                                                 int dayIndex, JsonReader jsonReader){
+        temperatureLabel.setText(forecastDataWeather.fetchTemperature(dayIndex, jsonReader) + "°C");
+        iconLabel.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + forecastDataWeather.fetchIcon(dayIndex, jsonReader) + ".png"));
     }
-    public void inputDataIntoObjects2() {
 
-        nameTownLabel2.setText(nameTown2);
-        errorLabel2.setText("");
-
-        temperatureLabel41.setText(generatorWeatherDays.generateTemperature(1, nameTown2) + "°C");
-        iconLabel41.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(1, nameTown2) + ".png"));
-
-        temperatureLabel42.setText(generatorWeatherDays.generateTemperature(2, nameTown2) + "°C");
-        iconLabel42.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(2, nameTown2) + ".png"));
-
-        temperatureLabel43.setText(generatorWeatherDays.generateTemperature(3, nameTown2) + "°C");
-        iconLabel43.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(3, nameTown2) + ".png"));
-
-        temperatureLabel44.setText(generatorWeatherDays.generateTemperature(4, nameTown2) + "°C");
-        iconLabel44.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(4, nameTown2) + ".png"));
-
-        temperatureLabel45.setText(generatorWeatherDays.generateTemperature(5, nameTown2) + "°C");
-        iconLabel45.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(5, nameTown2) + ".png"));
-
-        temperatureLabel46.setText(generatorWeatherDays.generateTemperature(6, nameTown2) + "°C");
-        iconLabel46.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(6, nameTown2) + ".png"));
-
-        temperatureLabel47.setText(generatorWeatherDays.generateTemperature(7, nameTown2) + "°C");
-        iconLabel47.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(7, nameTown2) + ".png"));
-
-        temperatureLabel48.setText(generatorWeatherDays.generateTemperature(8, nameTown2) + "°C");
-        iconLabel48.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(8, nameTown2) + ".png"));
-
-        temperatureLabel49.setText(generatorWeatherDays.generateTemperature(9, nameTown2) + "°C");
-        iconLabel49.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(9, nameTown2) + ".png"));
-
-        temperatureLabel50.setText(generatorWeatherDays.generateTemperature(10, nameTown2) + "°C");
-        iconLabel50.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(10, nameTown2) + ".png"));
-
-        temperatureLabel51.setText(generatorWeatherDays.generateTemperature(11, nameTown2) + "°C");
-        iconLabel51.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(11, nameTown2) + ".png"));
-
-        temperatureLabel52.setText(generatorWeatherDays.generateTemperature(12, nameTown2) + "°C");
-        iconLabel52.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(12, nameTown2) + ".png"));
-
-        temperatureLabel53.setText(generatorWeatherDays.generateTemperature(13, nameTown2) + "°C");
-        iconLabel53.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(13, nameTown2) + ".png"));
-
-        temperatureLabel54.setText(generatorWeatherDays.generateTemperature(14, nameTown2) + "°C");
-        iconLabel54.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(14, nameTown2) + ".png"));
-
-        temperatureLabel55.setText(generatorWeatherDays.generateTemperature(15, nameTown2) + "°C");
-        iconLabel55.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(15, nameTown2) + ".png"));
-
-        temperatureLabel56.setText(generatorWeatherDays.generateTemperature(16, nameTown2) + "°C");
-        iconLabel56.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(16, nameTown2) + ".png"));
-
-        temperatureLabel57.setText(generatorWeatherDays.generateTemperature(17, nameTown2) + "°C");
-        iconLabel57.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(17, nameTown2) + ".png"));
-
-        temperatureLabel58.setText(generatorWeatherDays.generateTemperature(18, nameTown2) + "°C");
-        iconLabel58.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(18, nameTown2) + ".png"));
-
-        temperatureLabel59.setText(generatorWeatherDays.generateTemperature(19, nameTown2) + "°C");
-        iconLabel59.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(19, nameTown2) + ".png"));
-
-        temperatureLabel60.setText(generatorWeatherDays.generateTemperature(20, nameTown2) + "°C");
-        iconLabel60.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(20, nameTown2) + ".png"));
-
-        temperatureLabel61.setText(generatorWeatherDays.generateTemperature(21, nameTown2) + "°C");
-        iconLabel61.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(21, nameTown2) + ".png"));
-
-        temperatureLabel62.setText(generatorWeatherDays.generateTemperature(22, nameTown2) + "°C");
-        iconLabel62.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(22, nameTown2) + ".png"));
-
-        temperatureLabel63.setText(generatorWeatherDays.generateTemperature(23, nameTown2) + "°C");
-        iconLabel63.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(23, nameTown2) + ".png"));
-
-        temperatureLabel64.setText(generatorWeatherDays.generateTemperature(24, nameTown2) + "°C");
-        iconLabel64.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(24, nameTown2) + ".png"));
-
-        temperatureLabel65.setText(generatorWeatherDays.generateTemperature(25, nameTown2) + "°C");
-        iconLabel65.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(25, nameTown2) + ".png"));
-
-        temperatureLabel66.setText(generatorWeatherDays.generateTemperature(26, nameTown2) + "°C");
-        iconLabel66.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(26, nameTown2) + ".png"));
-
-        temperatureLabel67.setText(generatorWeatherDays.generateTemperature(27, nameTown2) + "°C");
-        iconLabel67.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(27, nameTown2) + ".png"));
-
-        temperatureLabel68.setText(generatorWeatherDays.generateTemperature(28, nameTown2) + "°C");
-        iconLabel68.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(28, nameTown2) + ".png"));
-
-        temperatureLabel69.setText(generatorWeatherDays.generateTemperature(29, nameTown2) + "°C");
-        iconLabel69.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(29, nameTown2) + ".png"));
-
-        temperatureLabel70.setText(generatorWeatherDays.generateTemperature(30, nameTown2) + "°C");
-        iconLabel70.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(30, nameTown2) + ".png"));
-
-        temperatureLabel71.setText(generatorWeatherDays.generateTemperature(31, nameTown2) + "°C");
-        iconLabel71.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(31, nameTown2) + ".png"));
-
-        temperatureLabel72.setText(generatorWeatherDays.generateTemperature(32, nameTown2) + "°C");
-        iconLabel72.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(32, nameTown2) + ".png"));
-
-        temperatureLabel73.setText(generatorWeatherDays.generateTemperature(33, nameTown2) + "°C");
-        iconLabel73.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(33, nameTown2) + ".png"));
-
-        temperatureLabel74.setText(generatorWeatherDays.generateTemperature(34, nameTown2) + "°C");
-        iconLabel74.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(34, nameTown2) + ".png"));
-
-        temperatureLabel75.setText(generatorWeatherDays.generateTemperature(35, nameTown2) + "°C");
-        iconLabel75.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(35, nameTown2) + ".png"));
-
-        temperatureLabel76.setText(generatorWeatherDays.generateTemperature(36, nameTown2) + "°C");
-        iconLabel76.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(36, nameTown2) + ".png"));
-
-        temperatureLabel77.setText(generatorWeatherDays.generateTemperature(37, nameTown2) + "°C");
-        iconLabel77.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(37, nameTown2) + ".png"));
-
-        temperatureLabel78.setText(generatorWeatherDays.generateTemperature(38, nameTown2) + "°C");
-        iconLabel78.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(38, nameTown2) + ".png"));
-
-        temperatureLabel79.setText(generatorWeatherDays.generateTemperature(39, nameTown2) + "°C");
-        iconLabel79.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(39, nameTown2) + ".png"));
-
-        temperatureLabel80.setText(generatorWeatherDays.generateTemperature(40, nameTown2) + "°C");
-        iconLabel80.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + generatorWeatherDays.generateIcon(40, nameTown2) + ".png"));
-
-    }
     private boolean fieldsAreValid1(){
 
-        msg = generatorWeatherDays.generateMessage(nameTown1);
-
-        if(textField1.getText().isEmpty()) {
-            errorLabel1.setText("Proszę wpisz nazwę miasta");
-            return false;
-        }
-        if(msg == "city not found") {
-            errorLabel1.setText("Wpisano błędną nazwę miasta");
-            return false;
-        }
-        return true;
+        return fieldsAreValid(nameTown1, textField1, errorLabel1);
     }
     private boolean fieldsAreValid2(){
 
-        msg = generatorWeatherDays.generateMessage(nameTown2);
+        return fieldsAreValid(nameTown2, textField2, errorLabel2);
+    }
+    private boolean fieldsAreValid(String nameTown, TextField textField, Label errorLabel){
 
-        if(textField2.getText().isEmpty()) {
-            errorLabel2.setText("Proszę wpisz nazwę miasta");
+        String msg = forecastDataWeather.fetchMessage(nameTown);
+
+        if(textField.getText().isEmpty()){
+            errorLabel.setText(SET_NAME_TOWN);
             return false;
         }
-        if(msg == "city not found") {
-            errorLabel2.setText("Wpisano błędną nazwę miasta");
+        if(msg.equals(CITY_MISSING)){
+            errorLabel.setText(WRONG_NAME_TOWN);
             return false;
         }
         return true;
