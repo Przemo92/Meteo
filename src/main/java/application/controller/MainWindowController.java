@@ -604,26 +604,28 @@ public class MainWindowController extends BaseController implements Initializabl
 
     private ForecastDataWeather forecastDataWeather = new ForecastDataWeather();
 
-    public MainWindowController(ViewFactory viewFactory, String fxmlName){
+    public MainWindowController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
     }
+
     @FXML
-    void foundAction2(){
+    void foundAction2() {
 
         nameTown2 = textField2.getText().toUpperCase();
 
-        if(fieldsAreValid2()){
+        if (fieldsAreValid2()) {
 
             setExceptionLabelText("");
             inputDataIntoObjects2();
             exceptionLabel.setText(exceptionLabelText);
         }
     }
+
     @FXML
-    void foundAction1(){
+    void foundAction1() {
 
         nameTown1 = textField1.getText().toUpperCase();
-        if(fieldsAreValid1()){
+        if (fieldsAreValid1()) {
 
             setExceptionLabelText("");
             inputDataIntoObjects1();
@@ -632,14 +634,15 @@ public class MainWindowController extends BaseController implements Initializabl
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
         inputDataIntoObjects1();
         inputDataIntoObjects2();
 
         exceptionLabel.setText(exceptionLabelText);
     }
-    public void inputDataIntoObjects1(){
+
+    public void inputDataIntoObjects1() {
 
         JsonReader jsonReader = new JsonReader();
         jsonReader.transformJsonObjectToArray(nameTown1);
@@ -689,6 +692,7 @@ public class MainWindowController extends BaseController implements Initializabl
         setIconAndTemperatureIntoLabels(temperatureLabel39, iconLabel39, 39, jsonReader);
         setIconAndTemperatureIntoLabels(temperatureLabel40, iconLabel40, 40, jsonReader);
     }
+
     public void inputDataIntoObjects2() {
 
         JsonReader jsonReader = new JsonReader();
@@ -738,7 +742,7 @@ public class MainWindowController extends BaseController implements Initializabl
         setIconAndTemperatureIntoLabels(temperatureLabel80, iconLabel80, 40, jsonReader);
     }
 
-    private void setLabelsWithDateAndTime(JsonReader jsonReader){
+    private void setLabelsWithDateAndTime(JsonReader jsonReader) {
 
         firstDay.setText(forecastDataWeather.fetchDate(1, jsonReader));
         secondDay.setText(forecastDataWeather.fetchDate(9, jsonReader));
@@ -772,28 +776,30 @@ public class MainWindowController extends BaseController implements Initializabl
     }
 
     private void setIconAndTemperatureIntoLabels(Label temperatureLabel, Label iconLabel,
-                                                 int dayIndex, JsonReader jsonReader){
+                                                 int dayIndex, JsonReader jsonReader) {
         temperatureLabel.setText(forecastDataWeather.fetchTemperature(dayIndex, jsonReader) + "°C");
         iconLabel.setGraphic(new ImageView("http://openweathermap.org/img/wn/" + forecastDataWeather.fetchIcon(dayIndex, jsonReader) + ".png"));
     }
 
-    private boolean fieldsAreValid1(){
+    private boolean fieldsAreValid1() {
 
         return fieldsAreValid(nameTown1, textField1, errorLabel1);
     }
-    private boolean fieldsAreValid2(){
+
+    private boolean fieldsAreValid2() {
 
         return fieldsAreValid(nameTown2, textField2, errorLabel2);
     }
-    private boolean fieldsAreValid(String nameTown, TextField textField, Label errorLabel){
+
+    private boolean fieldsAreValid(String nameTown, TextField textField, Label errorLabel) {
 
         String msg = forecastDataWeather.fetchMessage(nameTown);
 
-        if(textField.getText().isEmpty()){
+        if (textField.getText().isEmpty()) {
             errorLabel.setText(SET_NAME_TOWN);
             return false;
         }
-        if(msg.equals(CITY_MISSING)){
+        if (msg.equals(CITY_MISSING)) {
             errorLabel.setText(WRONG_NAME_TOWN);
             return false;
         }

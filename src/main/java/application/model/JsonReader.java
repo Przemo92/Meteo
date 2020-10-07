@@ -24,28 +24,28 @@ public class JsonReader {
 
     }
 
-    public String fetchWeatherMessage(String nameTown){
+    public String fetchWeatherMessage(String nameTown) {
 
         String message;
 
         try {
             JSONObject json2 = readJsonFromUrl(getFullApi(nameTown));
             message = "city exist";
-        }catch(IOException e){
+        } catch (IOException e) {
             message = "city not found";
         }
         return message;
     }
 
-    public void  transformJsonObjectToArray(String nameTown){
+    public void transformJsonObjectToArray(String nameTown) {
 
         try {
             JSONObject json = readJsonFromUrl(getFullApi(nameTown));
             jsonWeatherData = json.getJSONArray("list");
-        }catch (JSONException e){
+        } catch (JSONException e) {
             System.out.println(e);
             setExceptionLabelText(CONNECTION_PROBLEM_TEXT);
-        }catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println(ex);
             setExceptionLabelText(CONNECTION_PROBLEM_TEXT);
         }

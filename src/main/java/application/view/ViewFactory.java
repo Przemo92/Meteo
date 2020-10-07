@@ -12,12 +12,13 @@ import java.io.IOException;
 public class ViewFactory {
 
 
-    public void showMainWindow() throws IOException {
+    public void showMainWindow() {
 
         BaseController controller = new MainWindowController(this, "/MainWindow.fxml");
         initializeStage(controller);
     }
-    private void initializeStage(BaseController baseController){
+
+    private void initializeStage(BaseController baseController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(baseController.getFxmlName()));
         fxmlLoader.setController(baseController);
         Parent parent;
