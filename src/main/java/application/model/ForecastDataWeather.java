@@ -1,5 +1,6 @@
 package application.model;
 
+import com.google.gson.JsonArray;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -8,16 +9,16 @@ import java.util.Date;
 
 public class ForecastDataWeather {
 
-    public String fetchIcon(int dayIndex, JsonReader jsonReader) {
+    public String fetchIcon(int dayIndex, JSONArray jsonArray) {
 
-        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex, jsonReader);
+        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex, jsonArray);
 
         return item.getJSONArray("weather").getJSONObject(0).get("icon").toString();
     }
 
-    public String fetchDate(int dayIndex, JsonReader jsonReader) {
+    public String fetchDate(int dayIndex, JSONArray jsonArray) {
 
-        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex, jsonReader);
+        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex, jsonArray);
 
         long dateInSeconds = item.optLong("dt");
         SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
@@ -25,9 +26,9 @@ public class ForecastDataWeather {
         return format.format(date);
     }
 
-    public String fetchTime(int dayIndex, JsonReader jsonReader) {
+    public String fetchTime(int dayIndex, JSONArray jsonArray) {
 
-        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex, jsonReader);
+        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex, jsonArray);
 
         long dateInSeconds = item.optLong("dt");
         SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
@@ -35,9 +36,9 @@ public class ForecastDataWeather {
         return format2.format(date);
     }
 
-    public String fetchTemperature(int dayIndex, JsonReader jsonReader) {
+    public String fetchTemperature(int dayIndex, JSONArray jsonArray) {
 
-        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex, jsonReader);
+        JSONObject item = tranformJsonArrayIntoMiniJsonObject(dayIndex, jsonArray);
 
         double temperatureDouble;
         String temperatureString;
@@ -54,9 +55,8 @@ public class ForecastDataWeather {
         return temperatureString;
     }
 
-    private JSONObject tranformJsonArrayIntoMiniJsonObject(int dayIndex, JsonReader jsonReader) {
+    private JSONObject tranformJsonArrayIntoMiniJsonObject(int dayIndex, JSONArray jsonArray) {
 
-        JSONArray jsonArray = jsonReader.getJsonWeatherData();
         return jsonArray.getJSONObject(dayIndex - 1);
     }
 
@@ -65,4 +65,5 @@ public class ForecastDataWeather {
         JsonReader jsonReader = new JsonReader();
         return jsonReader.fetchWeatherMessage(nameTown);
     }
+
 }

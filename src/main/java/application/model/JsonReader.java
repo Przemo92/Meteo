@@ -37,17 +37,19 @@ public class JsonReader {
         return message;
     }
 
-    public void transformJsonObjectToArray(String nameTown) {
+    public JSONArray transformJsonObjectToArray(String nameTown) {
 
         try {
             JSONObject json = readJsonFromUrl(getFullApi(nameTown));
-            jsonWeatherData = json.getJSONArray("list");
+            return jsonWeatherData = json.getJSONArray("list");
         } catch (JSONException e) {
             System.out.println(e);
             setExceptionLabelText(CONNECTION_PROBLEM_TEXT);
+            return null;
         } catch (IOException ex) {
             System.out.println(ex);
             setExceptionLabelText(CONNECTION_PROBLEM_TEXT);
+            return null;
         }
     }
 
